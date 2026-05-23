@@ -1,8 +1,0 @@
-id,name,address
-1,João Silva,Rua A 123
-2,Maria Souza,Rua B 456
-,Sem ID,Rua C 000
-4,,Rua D 111
-5,Carlos Lima,
--1,ID Negativo,Rua X
-6,Ana Paula,Rua A 999s
