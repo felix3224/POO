@@ -1,6 +1,6 @@
 ﻿from typing import List, Tuple, Dict
-from pergunta import Pergunta
-from tentativaquestionario import TentativaQuestionario
+from src.pergunta import Pergunta
+from src.tentativaquestionario import TentativaQuestionario
 
 
 class Questionario:
@@ -20,4 +20,5 @@ class Questionario:
         self._perguntas.append(p)
 
     def criar_attempt(self, usuario: str) -> TentativaQuestionario:
-        return TentativaQuestionario(usuario)
+        t = TentativaQuestionario(questionario=self, usuario=usuario)
+        return t

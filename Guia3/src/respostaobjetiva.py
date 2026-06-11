@@ -1,17 +1,24 @@
 from typing import List, Tuple, Dict
-from resposta import Resposta
-from alternativa import Alternativa
+from src.resposta import Resposta
+from src.alternativa import Alternativa
+from src.perguntamultiplaescolha import PerguntaMultiplaEscolha
 
 
 class RespostaObjetiva(Resposta):
     def __init__(
         self,
-        pergunta,
-        esta_correta,
-        pontuacao_obtida,
-        indice_escolhido: int,
+        pergunta: PerguntaMultiplaEscolha,
+        indice_escolhido: int = None,
         alternativa_selecionada: Alternativa = None,
     ):
-        super().__init__(pergunta, esta_correta, pontuacao_obtida)
-        self.__indice_escolhido = indice_escolhido
-        self.__alternativa_selecionada = alternativa_selecionada
+        self._indice_escolhido = indice_escolhido
+        self._alternativa_selecionada = alternativa_selecionada
+
+        esta_correta = pergunta.validar_resposta(self._indice_escolhido)
+        super().__init__(pergunta, esta_correta)
+
+    def calcular_pontuacao(self):
+        if self.esta_correta:
+            return 1.0
+        else:
+            return 0

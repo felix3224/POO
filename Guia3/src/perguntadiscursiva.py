@@ -8,7 +8,7 @@ class PerguntaDiscursiva(Pergunta):
         texto,
         resposta_esperada=None,
         explicacao_geral: str = None,
-        case_sensitive: bool = False,
+        case_sensitive: bool = None,
     ):
         super().__init__(texto, explicacao_geral)
         self._resposta_esperada = resposta_esperada
@@ -24,7 +24,8 @@ class PerguntaDiscursiva(Pergunta):
             return
 
         if not self._case_sensitive:
-            return self._resposta_esperada.lower() == texto.lower()
+            resposta_lower = self._resposta_esperada
+            return resposta_lower.lower() == texto.lower()
 
         return self._resposta_esperada == texto
 
