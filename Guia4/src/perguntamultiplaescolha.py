@@ -1,28 +1,32 @@
-from typing import List, Tuple, Dict
+from typing import List
 from src.alternativa import Alternativa
 from src.pergunta import Pergunta
 
 
 class PerguntaMultiplaEscolha(Pergunta):
-    def __init__(self, texto, explicacao_geral=None, alternativas: Alternativa = None):
+    def __init__(
+        self, texto, explicacao_geral=None, alternativas: List[Alternativa] = None
+    ):
         super().__init__(texto, explicacao_geral)
-        self._alternativa = alternativas
+        self._alternativas = alternativas or []
 
     @property
-    def alternativa(self):
-        return self._alternativa
+    def alternativas(self):
+        return self._alternativas
 
     def validar_resposta(self, indice: int) -> bool:
-        v = self._alternativa[indice]
-        return v.correta
+        if 0 <= indice < len(self._alternativas):
+            return self._alternativas[indice].correta
+        return False
 
     def get_alternativa_correta(self) -> Alternativa:
-        for i in self._alternativa:
-            if i.correta is True:
-                return i
+        for alt in self._alternativas:
+            if alt.correta:
+                return alt
+        return None
 
     def get_tipo(self):
         return "multipla_escolha"
 
     def get_explicacao(self):
-        return "Python normalmente é interpretada."
+        return self._explicacao_geral or "Sem explicação adicional."

@@ -1,10 +1,9 @@
-from typing import List, Tuple, Dict
 from datetime import datetime
-
 from src.perguntamultiplaescolha import PerguntaMultiplaEscolha
-
+from src.perguntadiscursiva import PerguntaDiscursiva
 from src.respostaobjetiva import RespostaObjetiva
 from src.respostadiscursiva import RespostaDiscursiva
+from src.correcao import Correcao
 
 
 class TentativaQuestionario:
@@ -13,7 +12,7 @@ class TentativaQuestionario:
         self._usuario = usuario
         self._data_inicio = data_inicio or datetime.now()
         self._data_fim = data_fim
-        self._respostas = []  # for Class Resposta
+        self._respostas = []
         self._finalizado = False
 
     @property
@@ -29,14 +28,19 @@ class TentativaQuestionario:
 
         if isinstance(pergunta, PerguntaMultiplaEscolha):
             resolucao = RespostaObjetiva(pergunta=pergunta, indice_escolhido=valor)
+        elif isinstance(pergunta, PerguntaDiscursiva):
+            # Usa o serviço LLM para corrigir a resposta discursiva
+            correction = Correcao.corrigir_discursiva(pergunta, valor)
+            resolucao = RespostaDiscursiva(
+                pergunta=pergunta, texto_resposta=valor, correction_dict=correction
+            )
         else:
-            resolucao = RespostaDiscursiva(pergunta=pergunta, texto_resposta=valor)
+            raise TypeError(f"Tipo de pergunta não suportado: {type(pergunta)}")
 
         self._respostas.append(resolucao)
         return resolucao
 
     def finalizar(self) -> tuple[float, str]:
-        # Finaliza a tentativa, calcula pontuação e gera feedback.
         if self._finalizado:
             return self.calcular_pontuacao(), "Tentativa já finalizada."
 
@@ -46,14 +50,10 @@ class TentativaQuestionario:
         pontuacao = self.calcular_pontuacao()
         total_perguntas = len(self._questionario.perguntas)
         feedback = f"Você obteve {pontuacao} de {total_perguntas} ponto(s)."
-
         return pontuacao, feedback
 
     def calcular_pontuacao(self) -> float:
-        total = 0.0
-        for resposta in self._respostas:
-            total += resposta.calcular_pontuacao()
-        return total
+        return sum(resp.calcular_pontuacao() for resp in self._respostas)
 
     def is_finalizado(self) -> bool:
-        return True
+        return self._finalizado

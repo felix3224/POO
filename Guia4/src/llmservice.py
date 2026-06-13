@@ -2,12 +2,11 @@ import os
 import json
 from typing import Dict
 from groq import Groq
-
-from src.perguntadiscursiva import PerguntaDiscursiva
+from .perguntadiscursiva import PerguntaDiscursiva
 
 
 class LLMService:
-    def __init__(self, api_key: str = None, model: str = "llama3-70b-8192"):
+    def __init__(self, api_key: str = None, model: str = "llama-3.3-70b-versatile"):
         self.api_key = api_key or os.environ.get("GROQ_API_KEY")
         if not self.api_key:
             raise ValueError(
@@ -29,7 +28,6 @@ class LLMService:
             )
             resposta_raw = response.choices[0].message.content
             resultado = json.loads(resposta_raw)
-            # Validação dos campos esperados
             if not all(
                 k in resultado
                 for k in ("correta", "pontuacao", "feedback", "explicacao")
@@ -39,7 +37,6 @@ class LLMService:
                 )
             return resultado
         except Exception as e:
-            # Tratamento de erro: retorna estrutura padrão com falha
             return {
                 "correta": False,
                 "pontuacao": 0.0,
@@ -50,8 +47,7 @@ class LLMService:
     def _montar_prompt(self, pergunta: PerguntaDiscursiva, resposta_aluno: str) -> str:
         texto_pergunta = pergunta.texto
         resposta_esperada = pergunta.resposta_esperada or "Não informada"
-
-        prompt = f"""
+        return f"""
 Você é um corretor de questões discursivas.
 
 Pergunta: {texto_pergunta}
@@ -69,4 +65,3 @@ Retorne um JSON **estritamente** com os campos:
 
 Não inclua texto adicional fora do JSON.
 """
-        return prompt
