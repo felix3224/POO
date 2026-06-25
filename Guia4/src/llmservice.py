@@ -23,7 +23,7 @@ class LLMService:
             response = self.client.chat.completions.create(
                 model=self.model,
                 messages=[{"role": "user", "content": prompt}],
-                temperature=0.3,
+                temperature=1.8,
                 response_format={"type": "json_object"},
             )
             resposta_raw = response.choices[0].message.content

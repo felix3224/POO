@@ -33,3 +33,16 @@ class RespostaDiscursiva(Resposta):
 
     def get_feedback(self) -> str:
         return self._feedback or ""
+
+    def descrever(self) -> str:
+        status = "Correta" if self.esta_correta else "Incorreta"
+        linhas = [
+            f"Pergunta: {self.pergunta.texto}",
+            f"Resposta dada: {self._texto_resposta}",
+            f"Avaliação: {status}",
+        ]
+        if self._feedback:
+            linhas.append(f"Feedback: {self._feedback}")
+        if self._explicacao:
+            linhas.append(f"Explicação: {self._explicacao}")
+        return "\n".join(linhas)

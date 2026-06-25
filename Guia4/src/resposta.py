@@ -1,4 +1,3 @@
-from typing import List, Tuple, Dict
 from abc import ABC, abstractmethod
 from src.pergunta import Pergunta
 
@@ -16,4 +15,9 @@ class Resposta(ABC):
 
     @abstractmethod
     def calcular_pontuacao(self) -> float:
+        pass
+
+    @abstractmethod
+    def descrever(self) -> str:
+        """Retorna um texto legível com a pergunta e a resposta dada."""
         pass
