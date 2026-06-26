@@ -1,7 +1,5 @@
 
----
 
-```markdown
 # Guia 5 — Projeto de Sistema com Orientação a Objetos: RPG Python
 
 ## Contexto
@@ -70,20 +68,20 @@ classDiagram
         -damage: int
         -durability: int
         +calculate_damage() int
-        +use()
+        +use()  # implementação concreta
     }
 
     class Armor {
         -defense_bonus: int
         +protect(damage) int
-        +use()
+        +use()  # implementação concreta
     }
 
     class Consumable {
         -heal_amount: int
         -effect: str
         +consume()
-        +use()
+        +use()  # implementação concreta
     }
 
     class Inventory {
@@ -296,5 +294,5 @@ Divirta-se e bons códigos! 🎮🐍
 
 ```
 
----
+
 

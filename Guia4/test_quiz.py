@@ -36,16 +36,15 @@ tentativa = quiz.criar_attempt("aluno@email.com")
 
 # Respostas
 tentativa.registrar_resposta(0, 1)  # índice 1 é a alternativa correta
-tentativa.registrar_resposta(
-    1, "Dicionário é uma coleção de pares chave-valor, mutável."
-)
+tentativa.registrar_resposta(1, "É uma lista\n")
 
 # Finaliza e mostra resultado
 pontos, feedback = tentativa.finalizar()
+
+print("\n--- Detalhes das respostas ---")
+for resp in tentativa.respostas:
+    print(resp.descrever())
+    print("-" * 40)
+
 print(feedback)
 print(f"Pontuação final: {pontos}")
-
-# Exibe detalhes da correção da discursiva (feedback do LLM)
-resposta_disc = tentativa.respostas[1]
-if hasattr(resposta_disc, "get_feedback"):
-    print(f"Feedback do LLM: {resposta_disc.get_feedback()}")
