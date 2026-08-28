@@ -1,10 +1,10 @@
 
 
-# Guia 5 — Projeto de Sistema com Orientação a Objetos: RPG Python
+# Projeto de Sistema com Orientação a Objetos: RPG Python
 
 ## Contexto
 
-Este projeto consiste na implementação de um sistema completo de jogo de RPG de texto baseado em turnos executado via terminal. O objetivo principal deste repositório é consolidar de forma prática e aprofundada os conceitos fundamentais e avançados do paradigma de **Orientação a Objetos (POO)** em Python, unindo mecânicas complexas de jogo com a integração de uma Inteligência Artificial generativa via API externa (Groq utilizando o modelo `llama-3.3-70b-versatile`).
+Este projeto consiste na implementação de um jogo de RPG de texto baseado em turnos executado via terminal. O objetivo principal deste repositório é consolidar de forma prática e aprofundada os conceitos fundamentais e avançados do paradigma de **Orientação a Objetos (POO)** em Python, unindo mecânicas complexas de jogo com a integração de uma Inteligência Artificial generativa via API externa (Groq utilizando o modelo `llama-3.3-70b-versatile`).
 
 Através desta arquitetura, os seguintes conceitos de POO foram exercitados e validados:
 - **Classes e Objetos:** Instanciação dinâmica de personagens, heróis, monstros e itens colecionáveis.
@@ -129,50 +129,19 @@ classDiagram
 
 ---
 
-## 3. Estrutura de Pastas
-
-```
-rpg-project/
-├── src/
-│   ├── __init__.py
-│   ├── character.py
-│   ├── player.py
-│   ├── enemy.py
-│   ├── item.py
-│   ├── weapon.py
-│   ├── armor.py
-│   ├── consumable.py
-│   ├── inventory.py
-│   ├── combat.py
-│   ├── merchant.py
-│   └── npc_ai.py
-├── tests/
-│   ├── __init__.py
-│   ├── test_character.py
-│   ├── test_combat.py
-│   └── test_items.py
-├── main.py
-├── requirements.txt
-├── .env
-├── .gitignore
-└── README.md
-```
-
----
-
-## 4. Como preparar o ambiente
+## 3. Como preparar o ambiente
 
 Siga rigorosamente a sequência de comandos descrita nesta seção para garantir a reprodutibilidade completa do projeto e a execução correta da inteligência artificial.
 
-### 4.1. Criar venv
+### 3.1. Criar venv
 
-Na pasta raiz do projeto (`/Guia5`), execute o comando para inicializar o ambiente isolado do Python:
+Na pasta raiz do projeto (`/Projeto`), execute o comando para inicializar o ambiente isolado do Python:
 
 ```bash
 python -m venv .venv
 ```
 
-### 4.2. Ativar ambiente
+### 3.2. Ativar ambiente
 
 Ative a máquina virtual criada de acordo com o seu sistema operacional:
 
@@ -186,7 +155,7 @@ Ative a máquina virtual criada de acordo com o seu sistema operacional:
 source .venv/bin/activate
 ```
 
-### 4.3. Instalar dependências
+### 3.3. Instalar dependências
 
 Com a venv ativa, instale os pacotes necessários:
 
@@ -194,11 +163,11 @@ Com a venv ativa, instale os pacotes necessários:
 pip install -r requirements.txt
 ```
 
-### 4.4. Configurar Credenciais da API da IA
+### 3.4. Configurar Credenciais da API da IA
 
 O jogo utiliza chaves privadas para se conectar de maneira segura ao modelo remoto. Siga os passos:
 
-1. Crie um arquivo com o nome exato de **`.env`** na raiz do projeto (`/Guia5`).
+1. Crie um arquivo com o nome exato de **`.env`** na raiz do projeto (`/Projeto`).
 2. Adicione sua credencial secreta obtida no painel da Groq sem aspas ou espaçamentos:
 
 ```
@@ -209,7 +178,7 @@ GROQ_API_KEY=gsk_sua_chave_real_aqui
 
 ---
 
-## 5. Testes
+## 4. Testes
 
 Para executar os testes unitários e validar a lógica do sistema, com a venv ativa, execute:
 
@@ -232,7 +201,7 @@ Os testes cobrem:
 
 ---
 
-## 6. Execução e Interação
+## 5. Execução e Interação
 
 Para iniciar o jogo e viver a experiência completa, execute:
 
@@ -247,9 +216,9 @@ Ao executar o comando acima, o jogador é recebido com um menu interativo no ter
 1. **Criação de Personagem** – Escolha o nome e a classe inicial (Guerreiro, Mago, Arqueiro, etc.), que definem os atributos base.
 2. **Exploração** – Navegue por masmorras e encontre monstros aleatórios.
 3. **Combate em Turnos** – Durante a batalha, você pode:
-   - **Atacar** com a arma equipada (causa dano baseado no ataque e na arma).
+   - **Atacar**.
    - **Usar poção** para recuperar HP.
-   - **Fugir** (com chance de sucesso).
+   - **Fugir**.
 4. **Sistema de Evolução** – Ao vencer combates, ganha experiência e ouro; ao acumular XP suficiente, sobe de nível, aumentando seus atributos.
 5. **Loja** – Compre ou venda itens com o mercador.
 6. **Diálogos com NPCs** – Interaja com personagens não-jogadores que geram respostas dinâmicas usando a IA da Groq (ex.: dicas, missões, lore).
